@@ -1,6 +1,6 @@
-package com.mishamba.day6.entity;
+package com.mishamba.day6.model.entity;
 
-import com.mishamba.day6.exception.ProgramException;
+import com.mishamba.day6.model.exception.ModelException;
 import com.mishamba.day6.validator.NegativePagesValidator;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -9,22 +9,22 @@ import java.util.*;
 
 public class Book {
     private UUID id;
-    private final String name;
+    private final String title;
     private final ArrayList<String> authors;
     private final int pages;
 
-    public Book(String name, int pages, String ... authors) {
-        this.name = name;
+    public Book(String title, int pages, ArrayList<String> authors) {
+        this.title = title;
         this.pages = pages;
-        this.authors = new ArrayList<>(Arrays.asList(authors));
+        this.authors = authors;
     }
 
     public String getId() {
         return id.toString();
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public ArrayList<String> getAuthors() {
@@ -39,21 +39,17 @@ public class Book {
         this.id = UUID.randomUUID();
     }
 
-    static class Creator {
+    public static class Creator {
         @Contract("_, _, _ -> new")
-        public static @NotNull Book create(@NotNull String name, int pages,
-                                           @NotNull String ... authors) throws ProgramException {
+        public static @NotNull Book create(@NotNull String title, int pages,
+                                           @NotNull ArrayList<String> authors) throws ModelException {
             NegativePagesValidator validator = new NegativePagesValidator();
             if (validator.notNegative(pages)) {
-                throw new ProgramException("negative pages");
+                throw new ModelException("negative pages");
             }
 
-            return new Book(name, pages, authors);
+            return new Book(title, pages, authors);
         }
-    }
-
-    static class Comparator {
-
     }
 
     @Override
@@ -67,13 +63,21 @@ public class Book {
 
         Book book = (Book) o;
 
-        return book.getName().equals(this.getName()) &&
+        return book.getTitle().equals(this.getTitle()) &&
                 book.getPages() == this.getPages() &&
                 book.getAuthors().equals(this.getAuthors());
     }
 
     @Override
-    public int hashCode() { // TODO: 7/7/20 make cooler hash
-        return 53 * (pages + authors.size());
+    public int hashCode() {
+        int prime = 72;
+        int hashCode = prime * pages;
+        hashCode += prime * id.hashCode();
+        hashCode += prime * title.hashCode();
+        for (String author : this.getAuthors()) {
+            hashCode += author.hashCode();
+        }
+
+        return hashCode;
     }
 }
