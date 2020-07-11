@@ -10,14 +10,14 @@ import java.util.ArrayList;
 public interface LibraryService {
     void addBook(@NotNull String title, int pages,
                  ArrayList<String> authors) throws ModelException, ServiceException;
-    void removeBook(@NotNull String id, @NotNull String title, int pages,
-                    ArrayList<String> authors) throws ModelException, ServiceException;
-    Book findById(String id) throws ModelException;
-    ArrayList<Book> findByTitle(String title) throws ModelException;
-    ArrayList<Book> findByAuthors(String ... authors) throws ModelException;
-    ArrayList<Book> findByPages(int pages) throws ModelException;
-    ArrayList<Book> sortById();
-    ArrayList<Book> sortByTitle();
-    ArrayList<Book> sortByAuthors();
-    ArrayList<Book> sortByPages();
+    void removeBook(@NotNull String title, int pages, ArrayList<String> authors)
+            throws ServiceException;
+    Book findById(String id) throws ModelException, ServiceException;
+    ArrayList<Book> findByTitle(String title) throws ModelException, ServiceException;
+    ArrayList<Book> findByAuthors(String ... authors) throws ModelException, ServiceException;
+    ArrayList<Book> findByPages(int pages) throws ModelException, ServiceException;
+    ArrayList<Book> sortById() throws ServiceException;
+    ArrayList<Book> sortByTitle() throws ServiceException;
+    ArrayList<Book> sortByAuthors() throws ServiceException;
+    ArrayList<Book> sortByPages() throws ServiceException;
 }

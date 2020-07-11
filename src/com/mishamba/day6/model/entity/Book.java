@@ -72,7 +72,6 @@ public class Book {
     public int hashCode() {
         int prime = 72;
         int hashCode = prime * pages;
-        hashCode += prime * id.hashCode();
         hashCode += prime * title.hashCode();
         for (String author : this.getAuthors()) {
             hashCode += author.hashCode();
