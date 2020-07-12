@@ -6,7 +6,7 @@ import com.mishamba.day6.controller.exception.ControllerException;
 import org.jetbrains.annotations.NotNull;
 
 public class Invoker {
-    private final String BAD_RESPONCE = "smth went wrong. now check this out";
+    private final String BAD_RESPONSE = "smth went wrong. now check this out";
 
     public String executeCommand(@NotNull String command) {
         String commandName;
@@ -22,7 +22,7 @@ public class Invoker {
         try {
             responce = executionCommand.execute(command);
         } catch (ControllerException ex) {
-            responce = BAD_RESPONCE.concat(" " + ex.toString());
+            responce = BAD_RESPONSE.concat(" " + ex.toString());
         }
 
         return responce;
