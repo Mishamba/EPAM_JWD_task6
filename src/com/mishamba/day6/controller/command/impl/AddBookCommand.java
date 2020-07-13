@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class AddBookCommand implements Command {
     private static final int COMMAND_LENGTH = 7;
     private static final String SUCCESS_RESULT_MESSAGE = "book added successfully";
-    private static final String PAGES_REGEX = "(?<=\\w{7}\\s\\w\\+\\s)\\d+";
+    private static final String PAGES_REGEX = "(?<=\\s)\\d+(?!>\\s)";
     private static final String BOOK_TITLE_REGEX = "(?<=\\w{7}\\s)\\w+";
 
     @Override
@@ -33,24 +33,35 @@ public class AddBookCommand implements Command {
         return SUCCESS_RESULT_MESSAGE;
     }
 
-    private String formBookTitle(String parameters) {
+    private String formBookTitle(String parameters)
+            throws ControllerException {
         Pattern pattern = Pattern.compile(BOOK_TITLE_REGEX);
         Matcher matcher = pattern.matcher(parameters);
-        return matcher.group();
+        try {
+            matcher.find();
+            return matcher.group(0);
+        } catch (IllegalStateException | IndexOutOfBoundsException ex) {
+            throw new ControllerException(ex);
+        }
     }
 
-    private int formPages(String parameters) {
+    private int formPages(String parameters) throws ControllerException {
         Pattern pattern = Pattern.compile(PAGES_REGEX);
         Matcher matcher = pattern.matcher(parameters);
-        return Integer.parseInt(matcher.group());
+        try {
+            matcher.find();
+            return Integer.parseInt(matcher.group(0));
+        } catch (IllegalStateException | IndexOutOfBoundsException ex) {
+            throw new ControllerException(ex);
+        }
     }
 
     @Contract("_ -> new")
     private @NotNull ArrayList<String> formAuthors (@NotNull String parameters) {
         String[] authors = parameters.
                 substring(COMMAND_LENGTH + 1).
-                split(" ");
+                split("\\s");
         return new ArrayList<>(Arrays.asList(authors).
-                subList(3, authors.length));
+                subList(2, authors.length));
     }
 }

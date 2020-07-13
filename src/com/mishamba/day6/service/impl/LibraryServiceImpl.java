@@ -55,17 +55,6 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public Book findById(@NotNull String id) throws ServiceException {
-        LibraryDataAccessObjectImpl dataAccessObject = new LibraryDataAccessObjectImpl();
-        Optional<Book> bookOptional = dataAccessObject.findById(id);
-        if (bookOptional.isEmpty()) {
-            throw new ServiceException("no book with this id : " + id);
-        }
-
-        return bookOptional.get();
-    }
-
-    @Override
     public ArrayList<Book> findByTitle(@NotNull String title)
             throws ServiceException {
         LibraryDataAccessObjectImpl dataAccessObject =

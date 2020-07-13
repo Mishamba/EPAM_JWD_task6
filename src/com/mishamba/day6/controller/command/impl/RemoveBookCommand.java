@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class RemoveBookCommand implements Command {
     private static final int COMMAND_LENGTH = 10;
     private static final String SUCCESS_RESULT_MESSAGE = "book removed successfully";
-    private static final String PAGES_REGEX = "(?<=\\w{7}\\s\\w\\+\\s)\\d+";
+    private static final String PAGES_REGEX = "(?<=\\s)\\d+(?!>\\s)";
     private static final String BOOK_NAME_REGEX = "(?<=\\w{7}\\s)\\w+";
 
     public String execute(String parameter) throws ControllerException {
@@ -48,7 +48,7 @@ public class RemoveBookCommand implements Command {
     private @NotNull ArrayList<String> formAuthors(@NotNull String parameters) {
         String[] authors = parameters.
                 substring(COMMAND_LENGTH + 1).
-                split(" ");
+                split("\\s");
         return new ArrayList<>(Arrays.asList(authors).
                 subList(3, authors.length));
     }

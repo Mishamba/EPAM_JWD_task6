@@ -12,7 +12,6 @@ public interface LibraryService {
                  ArrayList<String> authors) throws ModelException, ServiceException;
     void removeBook(@NotNull String title, int pages, ArrayList<String> authors)
             throws ServiceException;
-    Book findById(String id) throws ModelException, ServiceException;
     ArrayList<Book> findByTitle(String title) throws ModelException, ServiceException;
     ArrayList<Book> findByAuthors(String ... authors) throws ModelException, ServiceException;
     ArrayList<Book> findByPages(int pages) throws ModelException, ServiceException;

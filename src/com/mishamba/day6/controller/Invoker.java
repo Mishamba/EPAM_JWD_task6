@@ -12,8 +12,8 @@ public class Invoker {
         String commandName;
         Command executionCommand;
 
-        char delimeter = ' ';
-        commandName = command.substring(0, command.indexOf(delimeter));
+        String delimiter = "\\s";
+        commandName = command.substring(0, command.indexOf(delimiter));
         executionCommand = CommandProvider.getInstance().
                 getCommand(commandName);
 

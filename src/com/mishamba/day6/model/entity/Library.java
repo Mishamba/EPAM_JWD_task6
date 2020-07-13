@@ -27,7 +27,7 @@ public class Library {
     }
 
     public void addBook(Book bookToAdd) throws ModelException {
-        if (MAX_CAPACITY >= books.size()) {
+        if (MAX_CAPACITY <= books.size()) {
             throw new ModelException("library is full");
         }
 

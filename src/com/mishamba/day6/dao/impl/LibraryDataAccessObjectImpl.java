@@ -7,7 +7,6 @@ import com.mishamba.day6.model.entity.Library;
 import com.mishamba.day6.model.exception.ModelException;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class LibraryDataAccessObjectImpl implements LibraryDataAccessObject {
     @Override
@@ -26,11 +25,6 @@ public class LibraryDataAccessObjectImpl implements LibraryDataAccessObject {
         } catch (ModelException ex) {
             throw new DaoException(ex);
         }
-    }
-
-    @Override
-    public Optional<Book> findById(String id) {
-        return Library.getInstance().findById(id);
     }
 
     @Override

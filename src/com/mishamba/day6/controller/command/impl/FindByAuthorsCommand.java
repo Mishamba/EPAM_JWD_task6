@@ -21,6 +21,6 @@ public class FindByAuthorsCommand implements Command {
 
     private String[] formAuthors(@NotNull String parameters) {
         return parameters.trim().substring(COMMAND_LENGTH + 1, parameters.length()).
-                split(" ");
+                split("\\s");
     }
 }

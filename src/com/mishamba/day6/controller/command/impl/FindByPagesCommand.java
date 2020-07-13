@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FindByPagesCommand implements Command {
     private static final int COMMAND_LENGTH = 11;
+
     @Override
     public String execute(@NotNull String parameter) throws ControllerException {
         int pages = formPages(parameter);

@@ -44,7 +44,7 @@ public class Book {
         public static @NotNull Book create(@NotNull String title, int pages,
                                            @NotNull ArrayList<String> authors) throws ModelException {
             NegativePagesValidator validator = new NegativePagesValidator();
-            if (validator.notNegative(pages)) {
+            if (!validator.negative(pages)) {
                 throw new ModelException("negative pages");
             }
 
