@@ -1,7 +1,9 @@
 package com.mishamba.day6.controller.command.impl;
 
 import com.mishamba.day6.controller.command.Command;
+import com.mishamba.day6.controller.command.tagfinder.TegFinder;
 import com.mishamba.day6.controller.exception.ControllerException;
+import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.service.exception.ServiceException;
 import com.mishamba.day6.service.impl.LibraryServiceImpl;
 import org.jetbrains.annotations.Contract;
@@ -9,39 +11,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RemoveBookCommand implements Command {
     private static final int COMMAND_LENGTH = 10;
-    private static final String SUCCESS_RESULT_MESSAGE = "book removed successfully";
-    private static final String PAGES_REGEX = "(?<=\\s)\\d+(?!>\\s)";
-    private static final String BOOK_NAME_REGEX = "(?<=\\w{7}\\s)\\w+";
 
-    public String execute(String parameter) throws ControllerException {
-        String bookName = formBookName(parameter);
-        int pages = formPages(parameter);
+    public ArrayList<CustomBook> execute(String parameter)
+            throws ControllerException {
+        String bookTitle = TegFinder.getInstance().formBookTitle(parameter);
+        int pages = TegFinder.getInstance().formPages(parameter);
         ArrayList<String> authors = formAuthors(parameter);
         try {
-            LibraryServiceImpl.getInstance().removeBook(bookName,
+            LibraryServiceImpl.getInstance().removeBook(bookTitle,
                     pages, authors);
         } catch (ServiceException ex) {
             throw new ControllerException(ex);
         }
 
-        return SUCCESS_RESULT_MESSAGE;
-    }
-
-    private String formBookName(String parameters) {
-        Pattern pattern = Pattern.compile(BOOK_NAME_REGEX);
-        Matcher matcher = pattern.matcher(parameters);
-        return matcher.group();
-    }
-
-    private int formPages(String parameters) {
-        Pattern pattern = Pattern.compile(PAGES_REGEX);
-        Matcher matcher = pattern.matcher(parameters);
-        return Integer.parseInt(matcher.group());
+        return LibraryServiceImpl.getInstance().selectAllBooks();
     }
 
     @Contract("_ -> new")

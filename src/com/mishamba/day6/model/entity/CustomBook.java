@@ -7,13 +7,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class Book {
+public class CustomBook {
     private UUID id;
     private final String title;
     private final ArrayList<String> authors;
     private final int pages;
 
-    public Book(String title, int pages, ArrayList<String> authors) {
+    public CustomBook(String title, int pages, ArrayList<String> authors) {
         this.title = title;
         this.pages = pages;
         this.authors = authors;
@@ -41,14 +41,14 @@ public class Book {
 
     public static class Creator {
         @Contract("_, _, _ -> new")
-        public static @NotNull Book create(@NotNull String title, int pages,
-                                           @NotNull ArrayList<String> authors) throws ModelException {
+        public static @NotNull CustomBook create(@NotNull String title, int pages,
+                                                 @NotNull ArrayList<String> authors) throws ModelException {
             NegativePagesValidator validator = new NegativePagesValidator();
-            if (!validator.negative(pages)) {
+            if (!validator.isNegative(pages)) {
                 throw new ModelException("negative pages");
             }
 
-            return new Book(title, pages, authors);
+            return new CustomBook(title, pages, authors);
         }
     }
 
@@ -57,11 +57,11 @@ public class Book {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Book)) {
+        if (!(o instanceof CustomBook)) {
             return false;
         }
 
-        Book book = (Book) o;
+        CustomBook book = (CustomBook) o;
 
         return book.getTitle().equals(this.getTitle()) &&
                 book.getPages() == this.getPages() &&

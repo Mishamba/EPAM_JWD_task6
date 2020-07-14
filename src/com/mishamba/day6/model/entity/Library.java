@@ -8,7 +8,7 @@ import java.util.Optional;
 public class Library {
     private static Library instance;
     private static final int MAX_CAPACITY = 1000;
-    private final ArrayList<Book> books;
+    private final ArrayList<CustomBook> books;
 
     private Library() {
         this.books = new ArrayList<>();
@@ -22,16 +22,16 @@ public class Library {
         return instance;
     }
 
-    public ArrayList<Book> getBooks() {
+    public ArrayList<CustomBook> getBooks() {
         return new ArrayList<>(books);
     }
 
-    public void addBook(Book bookToAdd) throws ModelException {
+    public void addBook(CustomBook bookToAdd) throws ModelException {
         if (MAX_CAPACITY <= books.size()) {
             throw new ModelException("library is full");
         }
 
-        for (Book book : books) {
+        for (CustomBook book : books) {
             if (book.equals(bookToAdd)) {
                 throw new ModelException("this book already exist in library");
             }
@@ -41,9 +41,9 @@ public class Library {
         books.add(bookToAdd);
     }
 
-    public void removeBook(Book bookToRemove) throws ModelException {
+    public void removeBook(CustomBook bookToRemove) throws ModelException {
         int index = 0;
-        for (Book book : books) {
+        for (CustomBook book : books) {
             if (book.equals(bookToRemove)) {
                 books.remove(index);
             }
@@ -54,8 +54,8 @@ public class Library {
         throw new ModelException("no such book");
     }
 
-    public Optional<Book> findById(String id) {
-        for (Book book : books) {
+    public Optional<CustomBook> findById(String id) {
+        for (CustomBook book : books) {
             if (book.getId().equals(id)) {
                 return Optional.of(book);
             }
@@ -64,9 +64,9 @@ public class Library {
         return Optional.empty();
     }
 
-    public ArrayList<Book> findByTitle(String title) {
-        ArrayList<Book> searchResult = new ArrayList<>();
-        for (Book book : books) {
+    public ArrayList<CustomBook> findByTitle(String title) {
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        for (CustomBook book : books) {
             if (book.getTitle().equals(title)) {
                 searchResult.add(book);
             }
@@ -75,9 +75,9 @@ public class Library {
         return searchResult;
     }
 
-    public ArrayList<Book> findByAuthors(String ... authors) {
-        ArrayList<Book> searchResult = new ArrayList<>();
-        for (Book book : books) {
+    public ArrayList<CustomBook> findByAuthors(String ... authors) {
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        for (CustomBook book : books) {
             for (int i = 0; i< authors.length;i++) {
                 for (String author : authors) {
                     if (book.getAuthors().get(i).equals(author)) {
@@ -90,9 +90,9 @@ public class Library {
         return searchResult;
     }
 
-    public ArrayList<Book> findByPages(int pages) {
-        ArrayList<Book> searchResult = new ArrayList<>();
-        for (Book book : books) {
+    public ArrayList<CustomBook> findByPages(int pages) {
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        for (CustomBook book : books) {
             if (book.getPages() == pages) {
                 searchResult.add(book);
             }
@@ -114,7 +114,7 @@ public class Library {
     public int hashCode() {
         int prime = 62;
         int hash = 0;
-        for (Book book : books) {
+        for (CustomBook book : books) {
             hash += prime * book.hashCode();
         }
 

@@ -2,19 +2,22 @@ package com.mishamba.day6.controller.command.impl;
 
 import com.mishamba.day6.controller.command.Command;
 import com.mishamba.day6.controller.exception.ControllerException;
+import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.service.exception.ServiceException;
 import com.mishamba.day6.service.impl.LibraryServiceImpl;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class FindByPagesCommand implements Command {
     private static final int COMMAND_LENGTH = 11;
 
     @Override
-    public String execute(@NotNull String parameter) throws ControllerException {
+    public ArrayList<CustomBook> execute(@NotNull String parameter) throws ControllerException {
         int pages = formPages(parameter);
         try {
             return LibraryServiceImpl.getInstance().
-                    findByPages(pages).toString();
+                    findByPages(pages);
         } catch (ServiceException ex) {
             throw new ControllerException(ex);
         }

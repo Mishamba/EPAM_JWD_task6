@@ -1,7 +1,9 @@
 package com.mishamba.day6.controller.command.impl;
 
 import com.mishamba.day6.controller.command.Command;
+import com.mishamba.day6.controller.command.tagfinder.TegFinder;
 import com.mishamba.day6.controller.exception.ControllerException;
+import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.service.exception.ServiceException;
 import com.mishamba.day6.service.impl.LibraryServiceImpl;
 import org.jetbrains.annotations.Contract;
@@ -9,20 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AddBookCommand implements Command {
     private static final int COMMAND_LENGTH = 7;
-    private static final String SUCCESS_RESULT_MESSAGE = "book added successfully";
-    private static final String PAGES_REGEX = "(?<=\\s)\\d+(?!>\\s)";
-    private static final String BOOK_TITLE_REGEX = "(?<=\\w{7}\\s)\\w+";
 
     @Override
-    public String execute(@NotNull String parameter) throws ControllerException {
-        String bookTitle = formBookTitle(parameter);
-        int pages = formPages(parameter);
-        ArrayList<String> authors = formAuthors(parameter);
+    public ArrayList<CustomBook> execute(@NotNull String command)
+            throws ControllerException {
+        String bookTitle = TegFinder.getInstance().formBookTitle(command);
+        int pages = TegFinder.getInstance().formPages(command);
+        ArrayList<String> authors = formAuthors(command);
         try {
             LibraryServiceImpl.getInstance().addBook(bookTitle,
                     pages, authors);
@@ -30,35 +28,12 @@ public class AddBookCommand implements Command {
             throw new ControllerException(ex);
         }
 
-        return SUCCESS_RESULT_MESSAGE;
-    }
-
-    private String formBookTitle(String parameters)
-            throws ControllerException {
-        Pattern pattern = Pattern.compile(BOOK_TITLE_REGEX);
-        Matcher matcher = pattern.matcher(parameters);
-        try {
-            matcher.find();
-            return matcher.group(0);
-        } catch (IllegalStateException | IndexOutOfBoundsException ex) {
-            throw new ControllerException(ex);
-        }
-    }
-
-    private int formPages(String parameters) throws ControllerException {
-        Pattern pattern = Pattern.compile(PAGES_REGEX);
-        Matcher matcher = pattern.matcher(parameters);
-        try {
-            matcher.find();
-            return Integer.parseInt(matcher.group(0));
-        } catch (IllegalStateException | IndexOutOfBoundsException ex) {
-            throw new ControllerException(ex);
-        }
+        return LibraryServiceImpl.getInstance().selectAllBooks();
     }
 
     @Contract("_ -> new")
-    private @NotNull ArrayList<String> formAuthors (@NotNull String parameters) {
-        String[] authors = parameters.
+    private @NotNull ArrayList<String> formAuthors (@NotNull String command) {
+        String[] authors = command.
                 substring(COMMAND_LENGTH + 1).
                 split("\\s");
         return new ArrayList<>(Arrays.asList(authors).

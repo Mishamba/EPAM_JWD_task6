@@ -1,6 +1,6 @@
 package com.mishamba.day6.model.comparator;
 
-import com.mishamba.day6.model.entity.Book;
+import com.mishamba.day6.model.entity.CustomBook;
 import org.jetbrains.annotations.NotNull;
 
 public class Comparator {
@@ -8,15 +8,15 @@ public class Comparator {
 
     }
 
-    public static int compareById(@NotNull Book firstBook, @NotNull Book secondBook) {
+    public static int compareById(@NotNull CustomBook firstBook, @NotNull CustomBook secondBook) {
         return firstBook.getId().compareTo(secondBook.getId());
     }
 
-    public static int compareByTitle(@NotNull Book firstBook, @NotNull Book secondBook) {
+    public static int compareByTitle(@NotNull CustomBook firstBook, @NotNull CustomBook secondBook) {
         return firstBook.getTitle().compareTo(secondBook.getTitle());
     }
 
-    public static int compareByAuthors(@NotNull Book firstBook, @NotNull Book secondBook) {
+    public static int compareByAuthors(@NotNull CustomBook firstBook, @NotNull CustomBook secondBook) {
         if (firstBook.getAuthors().size() > secondBook.getAuthors().size()) {
             return 1;
         } else if (firstBook.getAuthors().size() < secondBook.getAuthors().size()) {
@@ -38,7 +38,7 @@ public class Comparator {
         return resultCompare;
     }
 
-    public static int compareByPages(@NotNull Book firstBook, @NotNull Book secondBook) {
+    public static int compareByPages(@NotNull CustomBook firstBook, @NotNull CustomBook secondBook) {
         int resultCompare = (firstBook.getPages() >= secondBook.getPages()) ? 1 : -1;
         if (firstBook.getPages() == secondBook.getPages()) {
             resultCompare = 0;
