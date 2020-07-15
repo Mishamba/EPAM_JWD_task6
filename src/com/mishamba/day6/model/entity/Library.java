@@ -75,13 +75,20 @@ public class Library {
         return searchResult;
     }
 
-    public ArrayList<CustomBook> findByAuthors(String ... authors) {
+    public ArrayList<CustomBook> findByAuthors(String... authors) {
         ArrayList<CustomBook> searchResult = new ArrayList<>();
+        boolean foundBook = false;
         for (CustomBook book : books) {
-            for (int i = 0; i< authors.length;i++) {
-                for (String author : authors) {
-                    if (book.getAuthors().get(i).equals(author)) {
+            foundBook = false;
+            ArrayList<String> bookAuthors = book.getAuthors();
+            for (String bookAuthor : bookAuthors) {
+                if (foundBook) {
+                    break;
+                }
+                for (String givenAuthor : authors) {
+                    if (bookAuthor.equals(givenAuthor)) {
                         searchResult.add(book);
+                        foundBook = true;
                     }
                 }
             }

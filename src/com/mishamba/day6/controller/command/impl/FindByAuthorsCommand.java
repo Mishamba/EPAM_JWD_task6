@@ -6,6 +6,7 @@ import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.service.exception.ServiceException;
 import com.mishamba.day6.service.impl.LibraryServiceImpl;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,11 @@ public class FindByAuthorsCommand implements Command {
     }
 
     private String[] formAuthors(@NotNull String parameters) {
-        return parameters.trim().substring(COMMAND_LENGTH + 1, parameters.length()).
-                split("\\s");
+        if (parameters.length() < COMMAND_LENGTH + 1) {
+            return new String[]{};
+        } else {
+            return parameters.trim().substring(COMMAND_LENGTH + 1, parameters.length()).
+                    split("\\s");
+        }
     }
 }

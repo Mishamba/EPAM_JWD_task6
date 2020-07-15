@@ -36,7 +36,7 @@ public class RemoveBookCommand implements Command {
                 substring(COMMAND_LENGTH + 1).
                 split("\\s");
         return new ArrayList<>(Arrays.asList(authors).
-                subList(3, authors.length));
+                subList(2, authors.length));
     }
 }
 

@@ -34,7 +34,7 @@ public class LibraryDataAccessObjectImpl implements LibraryDataAccessObject {
 
     @Override
     public ArrayList<CustomBook> findByAuthors(String... authors) {
-        return Library.getInstance().findByAuthors();
+        return Library.getInstance().findByAuthors(authors);
     }
 
     @Override

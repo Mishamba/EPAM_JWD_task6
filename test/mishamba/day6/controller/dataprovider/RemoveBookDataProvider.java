@@ -9,28 +9,28 @@ import org.testng.annotations.DataProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AddBookDataProvider {
+public class RemoveBookDataProvider {
 
     @Contract(value = " -> new", pure = true)
-    @DataProvider(name = "addbook invalid command")
-    public static Object[] @NotNull [] addbookInvalidCommands() {
+    @DataProvider(name = "removebook invalid command")
+    public static Object[] @NotNull [] removebookInvalidCommands() {
         return new Object[][] {
-                {"addbookjava8700mishambagleckkek"},
+                {"removebookjava8700mishambagleckkek"},
                 {"wtf"},
                 {"i've tired to write this"},
-                {"addbook java3 mishamba gleck"}
+                {"removebook java3 mishamba gleck"}
         };
     }
 
     @Contract(" -> new")
-    @DataProvider(name = "addbook valid command")
-    public static Object[] @NotNull [] addbookValidCommands()
+    @DataProvider(name = "removebook valid command")
+    public static Object[] @NotNull [] addbookInvalidCommands()
             throws ModelException {
         ArrayList<CustomBook> books = StandardBooksStack.get();
-        books.add(CustomBook.Creator.create("java8", 700,
-                new ArrayList<>(Arrays.asList("mishamba", "gleck", "kek"))));
+        books.remove(CustomBook.Creator.create("work", 60,
+                new ArrayList<>(Arrays.asList("Show", "Bolton", "Kage"))));
         return new Object[][]{
-                {"addbook java8 700 mishamba gleck kek", books}
+                {"removebook work 60 Show Bolton Kage", books}
         };
     }
 }
