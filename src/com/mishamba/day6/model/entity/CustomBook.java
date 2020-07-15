@@ -2,6 +2,7 @@ package com.mishamba.day6.model.entity;
 
 import com.mishamba.day6.model.exception.ModelException;
 import com.mishamba.day6.validator.NegativePagesValidator;
+import com.mishamba.day6.validator.SameAuthorsValidator;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,10 +43,15 @@ public class CustomBook {
     public static class Creator {
         @Contract("_, _, _ -> new")
         public static @NotNull CustomBook create(@NotNull String title, int pages,
-                                                 @NotNull ArrayList<String> authors) throws ModelException {
-            NegativePagesValidator validator = new NegativePagesValidator();
-            if (!validator.isNegative(pages)) {
-                throw new ModelException("negative pages");
+                                                 @NotNull ArrayList<String> authors)
+                throws ModelException {
+            NegativePagesValidator negativePagesValidator =
+                    new NegativePagesValidator();
+            SameAuthorsValidator sameAuthorsValidator
+                    = new SameAuthorsValidator();
+            if (!negativePagesValidator.isNegative(pages) &&
+                    !sameAuthorsValidator.haveNoSame(authors)) {
+                throw new ModelException("parameters couldn't pass the validation");
             }
 
             return new CustomBook(title, pages, authors);
