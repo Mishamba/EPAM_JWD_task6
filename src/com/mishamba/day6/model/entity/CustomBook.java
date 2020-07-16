@@ -85,4 +85,14 @@ public class CustomBook {
 
         return hashCode;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder book = new StringBuilder();
+        book.append(this.id).append("\n");
+        book.append(this.title).append("\n");
+        book.append(this.pages).append("\n");
+        book.append(this.authors).append("\n");
+        return book.toString();
+    }
 }

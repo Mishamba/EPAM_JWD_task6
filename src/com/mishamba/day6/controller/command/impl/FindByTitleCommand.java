@@ -14,7 +14,8 @@ public class FindByTitleCommand implements Command {
     private static final int COMMAND_LENGTH = 11;
 
     @Override
-    public ArrayList<CustomBook> execute(String parameter) throws ControllerException {
+    public ArrayList<CustomBook> execute(String parameter)
+            throws ControllerException {
         String title = formTitle(parameter);
         try {
             return LibraryServiceImpl.getInstance().findByTitle(title);
@@ -24,7 +25,12 @@ public class FindByTitleCommand implements Command {
     }
 
     @Contract(pure = true)
-    private @NotNull String formTitle(@NotNull String parameter) {
-        return parameter.substring(COMMAND_LENGTH + 1);
+    private @NotNull String formTitle(@NotNull String parameter)
+            throws ControllerException {
+        try {
+            return parameter.substring(COMMAND_LENGTH + 1);
+        } catch (Exception ex) {
+            throw new ControllerException(ex);
+        }
     }
 }

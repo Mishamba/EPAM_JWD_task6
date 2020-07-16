@@ -13,7 +13,8 @@ public class FindByPagesCommand implements Command {
     private static final int COMMAND_LENGTH = 11;
 
     @Override
-    public ArrayList<CustomBook> execute(@NotNull String parameter) throws ControllerException {
+    public ArrayList<CustomBook> execute(@NotNull String parameter)
+            throws ControllerException {
         int pages = formPages(parameter);
         try {
             return LibraryServiceImpl.getInstance().
@@ -23,8 +24,13 @@ public class FindByPagesCommand implements Command {
         }
     }
 
-    private int formPages(@NotNull String parameters) {
-        return Integer.parseInt(parameters.trim().
-                substring(COMMAND_LENGTH + 1, parameters.length()));
+    private int formPages(@NotNull String parameters)
+            throws ControllerException {
+        try {
+            return Integer.parseInt(parameters.trim().
+                    substring(COMMAND_LENGTH + 1, parameters.length()));
+        } catch (Exception ex) {
+            throw new ControllerException(ex);
+        }
     }
 }

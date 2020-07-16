@@ -121,15 +121,8 @@ public class LibraryServiceImpl implements LibraryService {
         return sortBy(pages);
     }
 
-    @Override
-    public ArrayList<CustomBook> selectAllBooks() {
-        LibraryDataAccessObjectImpl dataAccessObject =
-                new LibraryDataAccessObjectImpl();
-
-        return dataAccessObject.selectAllBooks();
-    }
-
-    private @NotNull ArrayList<CustomBook> sortBy(Comparator comparator) throws ServiceException {
+    private @NotNull ArrayList<CustomBook> sortBy(Comparator comparator)
+            throws ServiceException {
         LibraryDataAccessObjectImpl dataAccessObject =
                 new LibraryDataAccessObjectImpl();
         ArrayList<CustomBook> books = dataAccessObject.selectAllBooks();
@@ -138,6 +131,14 @@ public class LibraryServiceImpl implements LibraryService {
         }
         books.sort(comparator);
         return books;
+    }
+
+    @Override
+    public ArrayList<CustomBook> selectAllBooks() {
+        LibraryDataAccessObjectImpl dataAccessObject =
+                new LibraryDataAccessObjectImpl();
+
+        return dataAccessObject.selectAllBooks();
     }
 }
 
