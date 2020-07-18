@@ -29,7 +29,7 @@ public class FindByPagesCommand implements Command {
         try {
             return Integer.parseInt(parameters.trim().
                     substring(COMMAND_LENGTH + 1, parameters.length()));
-        } catch (Exception ex) {
+        } catch (NumberFormatException | IndexOutOfBoundsException ex) {
             throw new ControllerException(ex);
         }
     }
