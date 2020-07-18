@@ -4,6 +4,7 @@ import com.mishamba.day6.controller.command.Command;
 import com.mishamba.day6.controller.command.factory.CommandProvider;
 import com.mishamba.day6.controller.exception.ControllerException;
 import com.mishamba.day6.model.entity.CustomBook;
+import com.mishamba.day6.service.exception.ServiceException;
 import com.mishamba.day6.service.impl.LibraryServiceImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -33,14 +34,17 @@ public class Invoker {
         Command executionCommand = CommandProvider.getInstance().
                 getCommand(commandName);
 
-        ArrayList<CustomBook> books;
+        ArrayList<CustomBook> books = new ArrayList<>();
 
         try {
              books = executionCommand.execute(command);
         } catch (ControllerException ex) {
             logger.warn("couldn't execute command: " + commandName +
                     " with call: " + command);
-            books = LibraryServiceImpl.getInstance().selectAllBooks();
+            try {
+                books = LibraryServiceImpl.getInstance().selectAllBooks();
+            } catch (ServiceException ignored) {
+            }
         }
 
         return books;

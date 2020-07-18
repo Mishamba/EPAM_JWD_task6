@@ -23,11 +23,11 @@ public class RemoveBookCommand implements Command {
         try {
             LibraryServiceImpl.getInstance().removeBook(bookTitle,
                     pages, authors);
+            return LibraryServiceImpl.getInstance().selectAllBooks();
         } catch (ServiceException ex) {
             throw new ControllerException(ex);
         }
 
-        return LibraryServiceImpl.getInstance().selectAllBooks();
     }
 
     @Contract("_ -> new")

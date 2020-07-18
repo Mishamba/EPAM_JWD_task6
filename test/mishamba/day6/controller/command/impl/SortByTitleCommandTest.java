@@ -5,6 +5,7 @@ import com.mishamba.day6.controller.exception.ControllerException;
 import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.model.entity.Library;
 import com.mishamba.day6.model.exception.ModelException;
+import mishamba.day6.controller.dataprovider.SortByTitleDataProvider;
 import mishamba.day6.controller.dataprovider.StandardBooksStack;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -34,7 +35,8 @@ public class SortByTitleCommandTest {
         }
     }
 
-    @Test
+    @Test(dataProvider = "sortbytitle sorted order",
+            dataProviderClass = SortByTitleDataProvider.class)
     public void testExecute(ArrayList<CustomBook> expected) {
         SortByTitleCommand sortByTitleCommand = new SortByTitleCommand();
         try {

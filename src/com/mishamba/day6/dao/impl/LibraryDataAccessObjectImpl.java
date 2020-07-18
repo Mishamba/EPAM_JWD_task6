@@ -29,17 +29,49 @@ public class LibraryDataAccessObjectImpl implements LibraryDataAccessObject {
 
     @Override
     public ArrayList<CustomBook> findByTitle(String title) {
-        return Library.getInstance().findByTitle(title);
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        for (CustomBook book : Library.getInstance().getBooks()) {
+            if (book.getTitle().equals(title)) {
+                searchResult.add(book);
+            }
+        }
+
+        return searchResult;
     }
 
     @Override
     public ArrayList<CustomBook> findByAuthors(String... authors) {
-        return Library.getInstance().findByAuthors(authors);
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        boolean foundBook = false;
+        for (CustomBook book : Library.getInstance().getBooks()) {
+            foundBook = false;
+            ArrayList<String> bookAuthors = book.getAuthors();
+            for (String bookAuthor : bookAuthors) {
+                if (foundBook) {
+                    break;
+                }
+                for (String givenAuthor : authors) {
+                    if (bookAuthor.equals(givenAuthor)) {
+                        searchResult.add(book);
+                        foundBook = true;
+                    }
+                }
+            }
+        }
+
+        return searchResult;
     }
 
     @Override
     public ArrayList<CustomBook> findByPages(int pages) {
-        return Library.getInstance().findByPages(pages);
+        ArrayList<CustomBook> searchResult = new ArrayList<>();
+        for (CustomBook book : Library.getInstance().getBooks()) {
+            if (book.getPages() == pages) {
+                searchResult.add(book);
+            }
+        }
+
+        return searchResult;
     }
 
     @Override

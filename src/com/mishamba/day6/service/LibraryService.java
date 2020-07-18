@@ -15,9 +15,8 @@ public interface LibraryService {
     ArrayList<CustomBook> findByTitle(String title) throws ModelException, ServiceException;
     ArrayList<CustomBook> findByAuthors(String ... authors) throws ModelException, ServiceException;
     ArrayList<CustomBook> findByPages(int pages) throws ModelException, ServiceException;
-    ArrayList<CustomBook> sortById() throws ServiceException;
     ArrayList<CustomBook> sortByTitle() throws ServiceException;
     ArrayList<CustomBook> sortByAuthors() throws ServiceException;
     ArrayList<CustomBook> sortByPages() throws ServiceException;
-    ArrayList<CustomBook> selectAllBooks();
+    ArrayList<CustomBook> selectAllBooks() throws ServiceException;
 }

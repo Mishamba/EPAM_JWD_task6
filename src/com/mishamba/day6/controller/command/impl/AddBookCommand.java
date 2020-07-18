@@ -24,11 +24,10 @@ public class AddBookCommand implements Command {
         try {
             LibraryServiceImpl.getInstance().addBook(bookTitle,
                     pages, authors);
+            return LibraryServiceImpl.getInstance().selectAllBooks();
         } catch (ServiceException ex) {
             throw new ControllerException(ex);
         }
-
-        return LibraryServiceImpl.getInstance().selectAllBooks();
     }
 
     @Contract("_ -> new")

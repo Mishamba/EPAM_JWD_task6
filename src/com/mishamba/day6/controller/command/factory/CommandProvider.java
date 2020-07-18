@@ -17,7 +17,6 @@ public class CommandProvider {
         repository.put(CommandName.FINDBYAUTHORS, new FindByAuthorsCommand());
         repository.put(CommandName.FINDBYPAGES, new FindByPagesCommand());
         repository.put(CommandName.FINDBYTITLE, new FindByTitleCommand());
-        repository.put(CommandName.SORTBYID, new SortByIdCommand());
         repository.put(CommandName.SORTBYPAGES, new SortByPagesCommand());
         repository.put(CommandName.SORTBYTITLE, new SortByTitleCommand());
         repository.put(CommandName.WRONGCOMMAND, new WrongRequest());

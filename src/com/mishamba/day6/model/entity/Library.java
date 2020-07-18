@@ -3,7 +3,6 @@ package com.mishamba.day6.model.entity;
 import com.mishamba.day6.model.exception.ModelException;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class Library {
     private static Library instance;
@@ -23,7 +22,19 @@ public class Library {
     }
 
     public ArrayList<CustomBook> getBooks() {
-        return new ArrayList<>(books);
+        ArrayList<CustomBook> copiedBooks = new ArrayList<>();
+        for (CustomBook book : this.books) {
+            try {
+                copiedBooks.add(CustomBook.Creator.create(
+                        book.getTitle(),
+                        book.getPages(),
+                        book.getAuthors()));
+            } catch (ModelException ignored) {
+                // This data already validated.
+            }
+        }
+
+        return copiedBooks;
     }
 
     public void addBook(CustomBook bookToAdd) throws ModelException {
@@ -52,60 +63,6 @@ public class Library {
         }
 
         throw new ModelException("no such book");
-    }
-
-    public Optional<CustomBook> findById(String id) {
-        for (CustomBook book : books) {
-            if (book.getId().equals(id)) {
-                return Optional.of(book);
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    public ArrayList<CustomBook> findByTitle(String title) {
-        ArrayList<CustomBook> searchResult = new ArrayList<>();
-        for (CustomBook book : books) {
-            if (book.getTitle().equals(title)) {
-                searchResult.add(book);
-            }
-        }
-
-        return searchResult;
-    }
-
-    public ArrayList<CustomBook> findByAuthors(String... authors) {
-        ArrayList<CustomBook> searchResult = new ArrayList<>();
-        boolean foundBook = false;
-        for (CustomBook book : books) {
-            foundBook = false;
-            ArrayList<String> bookAuthors = book.getAuthors();
-            for (String bookAuthor : bookAuthors) {
-                if (foundBook) {
-                    break;
-                }
-                for (String givenAuthor : authors) {
-                    if (bookAuthor.equals(givenAuthor)) {
-                        searchResult.add(book);
-                        foundBook = true;
-                    }
-                }
-            }
-        }
-
-        return searchResult;
-    }
-
-    public ArrayList<CustomBook> findByPages(int pages) {
-        ArrayList<CustomBook> searchResult = new ArrayList<>();
-        for (CustomBook book : books) {
-            if (book.getPages() == pages) {
-                searchResult.add(book);
-            }
-        }
-
-        return searchResult;
     }
 
     @Override

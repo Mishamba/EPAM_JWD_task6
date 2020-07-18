@@ -15,7 +15,7 @@ public class SortByPagesDataProvider {
     @DataProvider(name = "sortbypages sorted order")
     public static Object[] @NotNull [] sortedByPages() throws ModelException {
         return new Object[][] {
-                {new ArrayList<CustomBook>(Arrays.asList(
+                {new ArrayList<>(Arrays.asList(
                         CustomBook.Creator.create("work", 60,
                                 new ArrayList<>(Arrays.asList(
                                         "Show",

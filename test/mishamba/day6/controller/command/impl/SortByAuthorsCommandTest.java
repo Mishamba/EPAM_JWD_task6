@@ -5,6 +5,8 @@ import com.mishamba.day6.controller.exception.ControllerException;
 import com.mishamba.day6.model.entity.CustomBook;
 import com.mishamba.day6.model.entity.Library;
 import com.mishamba.day6.model.exception.ModelException;
+import mishamba.day6.controller.dataprovider.SortByAuthorsDataProvider;
+import mishamba.day6.controller.dataprovider.SortByPagesDataProvider;
 import mishamba.day6.controller.dataprovider.StandardBooksStack;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -34,13 +36,13 @@ public class SortByAuthorsCommandTest {
         }
     }
 
-    @Test // TODO: 7/16/20 write dataprovider
-    public void testExecute_valid() { // FIXME: 7/16/20 not alphabet order
+    @Test(dataProvider = "sortbyauthors sorted order",
+            dataProviderClass = SortByAuthorsDataProvider.class)
+    public void testExecute_valid(ArrayList<CustomBook> expected) {
         SortByAuthorsCommand sortByAuthorsCommand = new SortByAuthorsCommand();
         try {
             ArrayList<CustomBook> actual = sortByAuthorsCommand.execute(" ");
-            actual.forEach(b -> System.out.println(b.toString()));
-            //assertEquals(actual, expected);
+            assertEquals(actual, expected);
         } catch (ControllerException ex) {
             fail(ex.toString());
         }

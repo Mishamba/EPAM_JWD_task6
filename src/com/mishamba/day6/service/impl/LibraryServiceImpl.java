@@ -94,13 +94,6 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public ArrayList<CustomBook> sortById() throws ServiceException {
-        Comparator id = com.mishamba.day6.model.comparator.
-                Comparator::compareById;
-        return sortBy(id);
-    }
-
-    @Override
     public ArrayList<CustomBook> sortByTitle() throws ServiceException {
         Comparator title = com.mishamba.day6.model.comparator.
                 Comparator::compareByTitle;
@@ -134,11 +127,15 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public ArrayList<CustomBook> selectAllBooks() {
+    public ArrayList<CustomBook> selectAllBooks() throws ServiceException {
         LibraryDataAccessObjectImpl dataAccessObject =
                 new LibraryDataAccessObjectImpl();
 
-        return dataAccessObject.selectAllBooks();
+        ArrayList<CustomBook> books = dataAccessObject.selectAllBooks();
+        if (books.isEmpty()) {
+            throw new ServiceException("no books found");
+        }
+        return books;
     }
 }
 
