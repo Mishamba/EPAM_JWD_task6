@@ -15,7 +15,6 @@ public class LibraryServiceImpl implements LibraryService {
     private static LibraryServiceImpl instance;
 
     private LibraryServiceImpl() {
-
     }
 
     public static LibraryServiceImpl getInstance() {
